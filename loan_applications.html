@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Applications</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Loan Applications</h2>
+    <form action="/update_status" method="POST">
+        <table>
+            <tr>
+                {% for column in columns %}
+                <th>{{ column }}</th>
+                {% endfor %}
+                <th>Update Status</th>
+            </tr>
+            {% for row in data %}
+            <tr>
+                {% for value in row %}
+                {% if loop.index0 == 12 %}  {# Check if it's the status column #}
+                <td>
+                    <select name="status_{{ row[0] }}" id="status_{{ row[0] }}">
+                        <option value="Pending" {% if value == 'Pending' %}selected{% endif %}>Pending</option>
+                        <option value="Approved" {% if value == 'Approved' %}selected{% endif %}>Approved</option>
+                        <option value="Disapproved" {% if value == 'Disapproved' %}selected{% endif %}>Disapproved</option>
+                    </select>
+                </td>
+                {% else %}
+                <td>{{ value }}</td>
+                {% endif %}
+                {% endfor %}
+                <td><button type="submit" name="submit" value="{{ row[0] }}">Update</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>

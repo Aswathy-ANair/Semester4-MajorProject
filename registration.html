@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/img/hm1.jpg');
+        }
+
+        h1 {
+            margin-top: 20px;
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .home-btn {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>{{ department_name }}</h1>
+</header>
+<a class="home-btn" href="/students">Departments</a>
+<table>
+    <thead>
+    <tr>
+        <th>Student Name</th>
+        <th>City</th>
+        <th>Contact No</th>
+        <th>Email Address</th>
+        <th>Academic Year</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+   {% for row in data %}
+    <tr>
+        <form action="{{ url_for('update_status', mstudent_id=row[0]) }}" method="post"> <!-- Form for each row -->
+            <td>{{ row[1] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>{{ row[4] }}</td>
+            <td>{{ row[7] }}</td>
+            <td>
+                <select name="status">
+                    <option value="Active" {% if row[8] == 'Active' %} selected {% endif %}>Active</option>
+                    <option value="Inactive" {% if row[8] == 'Inactive' %} selected {% endif %}>Inactive</option>
+                </select>
+            </td>
+            <td><button type="submit">Update</button></td> <!-- Submit button for each row -->
+        </form>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% for message in get_flashed_messages() %}
+    <script>
+        alert("{{ message }}");
+    </script>
+{% endfor %}
+
+</body>
+</html>

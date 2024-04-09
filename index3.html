@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Applications</title>
+</head>
+<body>
+    <h1>Loan Applications</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Gender</th>
+            <th>Married</th>
+              <th>Dependents</th>
+              <th>Education</th>
+              <th>Self Employed</th>
+              <th>Applicant Income</th>
+          <th>Coapplicant Income</th>
+          <th>Loan Amount</th>
+          <th>Loan Amount Term</th>
+          <th>Credit History</th>
+          <th>Property Area</th>
+
+            <!-- Add other columns as needed -->
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        {% for application in loan_applications %}
+        <tr>
+            <td>{{ application.id }}</td>
+            <td>{{ application.gender }}</td>
+            <td>{{ application.married }}</td>
+            <!-- Add other columns as needed -->
+            <td>{{ application.status }}</td>
+            <td>
+                <form action="/update_status" method="post">
+                    <input type="hidden" name="application_id" value="{{ application.id }}">
+                    <select name="new_status">
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="disapproved">Disapproved</option>
+                    </select>
+                    <input type="submit" value="Update">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
